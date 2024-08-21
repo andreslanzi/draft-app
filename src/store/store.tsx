@@ -21,6 +21,10 @@ type StoreContextProps = {
 	groupsQuantity: number;
 	setTeams: React.Dispatch<React.SetStateAction<Team[]>>;
 	clearAll: () => void;
+	setTeamsQuantity: React.Dispatch<React.SetStateAction<number>>;
+	teamsQuantity: number;
+	setVictoryPoints: React.Dispatch<React.SetStateAction<number>>;
+	victoryPoints: number;
 };
 
 const StoreContext = createContext({} as StoreContextProps);
@@ -33,6 +37,8 @@ export const StoreProvider = ({ children }: StoreProps) => {
 	const [players, setPlayers] = useLocalStorage<Player[]>("players", []);
 	const [teams, setTeams] = useLocalStorage<Team[]>("teams", []);
 	const [groupsQuantity, setGroupsQuantity] = useState<number>(0);
+	const [teamsQuantity, setTeamsQuantity] = useState<number>(0);
+	const [victoryPoints, setVictoryPoints] = useState<number>(3);
 
 	const getPlayersQuantity = () => players.length;
 
@@ -58,6 +64,11 @@ export const StoreProvider = ({ children }: StoreProps) => {
 				setTeams,
 				groupsQuantity,
 				setGroupsQuantity,
+				teamsQuantity,
+				setTeamsQuantity,
+				victoryPoints,
+				setVictoryPoints
+				
 			}}
 		>
 			{children}
