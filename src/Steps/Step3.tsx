@@ -4,7 +4,7 @@ type props = {
 };
 
 const Step3 = ({ activeStep, setActiveStep }: props) => {
-	return <div>Step1</div>;
+	return <div>Step3</div>;
 };
 
 export default Step3;

@@ -1,11 +1,12 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import initialData from "../data";
 
 type StoreProps = {
 	children: ReactNode;
 };
 
-export type Player = { nick: string; id: number };
+export type Player = { nick: string; id: string };
 export type Team = {
 	members: Player[];
 	name: string;
@@ -13,7 +14,7 @@ export type Team = {
 
 type StoreContextProps = {
 	getPlayersQuantity: () => number;
-	removePlayer: (id: number) => void;
+	removePlayer: (id: string) => void;
 	players: Player[];
 	setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
 	teams: Team[];
@@ -25,7 +26,11 @@ type StoreContextProps = {
 	teamsQuantity: number;
 	setVictoryPoints: React.Dispatch<React.SetStateAction<number>>;
 	victoryPoints: number;
+	initialData: any;
+	setInitialData: React.Dispatch<any>;
 };
+
+console.log({ initialData });
 
 const StoreContext = createContext({} as StoreContextProps);
 
@@ -34,15 +39,16 @@ export const useStore = () => {
 };
 
 export const StoreProvider = ({ children }: StoreProps) => {
-	const [players, setPlayers] = useLocalStorage<Player[]>("players", []);
-	const [teams, setTeams] = useLocalStorage<Team[]>("teams", []);
+	const [players, setPlayers] = useState<Player[]>([]);
+	const [teams, setTeams] = useState<Team[]>([]);
 	const [groupsQuantity, setGroupsQuantity] = useState<number>(0);
 	const [teamsQuantity, setTeamsQuantity] = useState<number>(0);
 	const [victoryPoints, setVictoryPoints] = useState<number>(3);
+	const [initialData, setInitialData] = useState<any>(undefined);
 
 	const getPlayersQuantity = () => players.length;
 
-	const removePlayer = (id: number) => {
+	const removePlayer = (id: string) => {
 		setPlayers((currItems) => {
 			return currItems.filter((player) => player.id !== id);
 		});
@@ -67,8 +73,9 @@ export const StoreProvider = ({ children }: StoreProps) => {
 				teamsQuantity,
 				setTeamsQuantity,
 				victoryPoints,
-				setVictoryPoints
-				
+				setVictoryPoints,
+				initialData,
+				setInitialData,
 			}}
 		>
 			{children}
