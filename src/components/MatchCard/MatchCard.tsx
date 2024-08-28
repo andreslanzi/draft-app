@@ -172,7 +172,15 @@ const MatchCard = ({ match }: props) => {
 						{teams[teamIds[0]].tag}{" "}
 					</h5>
 				</div>
-				<span>{`(${roundsA - roundsB})`}</span>
+				<span
+					className={
+						roundsA === 0 && roundsB === 0
+							? ""
+							: roundsA - roundsB > 0
+							? `text-green-500`
+							: "text-red-500"
+					}
+				>{`(${roundsA - roundsB})`}</span>
 			</div>
 
 			<span className="text-xl font-bold text-cyan-400"> VS </span>
@@ -195,7 +203,15 @@ const MatchCard = ({ match }: props) => {
 						type="number"
 					/>
 				</div>
-				<span>{`(${roundsB - roundsA})`}</span>
+				<span
+					className={
+						roundsA === 0 && roundsB === 0
+							? ""
+							: roundsB - roundsA > 0
+							? `text-green-500`
+							: "text-red-500"
+					}
+				>{`(${roundsB - roundsA})`}</span>
 			</div>
 		</div>
 	);

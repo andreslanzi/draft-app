@@ -185,14 +185,14 @@ const Step1 = () => {
 							Puntos por victoria
 						</label>
 					</div>
-					<p className="font-bold text-center mt-4 text-[#EBF4F6]">
+					{/* <p className="font-bold text-center mt-4 text-[#EBF4F6]">
 						{" "}
 						Cantidad de Equipos: {teamsQuantity}{" "}
 					</p>
 					<p className="font-bold text-center mt-4 text-[#EBF4F6]">
 						{" "}
 						Puntos por Victoria: {victoryPoints}{" "}
-					</p>
+					</p> */}
 				</div>
 
 				<div className="flex flex-col w-[60%] flex-wrap max-h-[60%]">
