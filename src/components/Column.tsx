@@ -9,25 +9,30 @@ const Container = styled.div<{ isNoTeamCol: any }>`
 	width: ${(props) => (props.isNoTeamCol ? "100%" : "220px")};
 	display: flex;
 	flex-direction: column;
+	position: relative;
 `;
 const Title = styled.h3`
 	padding: 8px;
+	font-weight: 600;
+	text-align: center;
 `;
 const PlayerList = styled.div<{ isNoTeamCol: any }>`
 	padding: 8px;
-	flex-grow: 1;
 	min-height: 100px;
-	display: ${(props) => (props.isNoTeamCol ? "flex" : "block")};
+	display: ${(props) => (props.isNoTeamCol ? "flex" : "flex")};
+	justify-content: center;
+	align-items: center;
 	flex-wrap: wrap;
 `;
 
 const Column = (props: any) => {
-	console.log({ props });
 	return (
 		<Container isNoTeamCol={props.isNoTeamCol}>
-			<Title>{props.column.title}</Title>
+			<Title className="outline outline-0 uppercase text-[#EBF4F6]">
+				{props.team.tag}
+			</Title>
 			<Droppable
-				droppableId={props.column.id}
+				droppableId={props.team.id}
 				direction={props.isNoTeamCol ? "horizontal" : "vertical"}
 			>
 				{(provided) => (
@@ -43,6 +48,9 @@ const Column = (props: any) => {
 					</PlayerList>
 				)}
 			</Droppable>
+			<span className="absolute bottom-2 right-2 font-bold text-[#EBF4F6]">
+				({props.players.length})
+			</span>
 		</Container>
 	);
 };

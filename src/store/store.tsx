@@ -1,15 +1,43 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import initialData from "../data";
 
 type StoreProps = {
 	children: ReactNode;
 };
 
-export type Player = { nick: string; id: string };
+export type Player = { nick: string; id: string; isCaptain: boolean };
 export type Team = {
-	members: Player[];
+	id: string;
+	tag: string;
+	playerIds: string[];
+	matchesPlayed: string[];
+	won: string[];
+	lost: string[];
+	roundsDiff: number;
+	points: number;
+};
+export type Match = {
+	id: string;
+	teamIds: string[];
+	rounds: {
+		[key: string]: number;
+	};
+	winner: string | undefined;
+};
+export type Group = {
+	id: string;
 	name: string;
+	members: string[];
+	matches: Match[];
+};
+export type BoardData = {
+	players: {
+		[key: string]: Player;
+	};
+	teamOrder: string[];
+	teams: {
+		[key: string]: Team;
+	};
 };
 
 type StoreContextProps = {
@@ -17,20 +45,24 @@ type StoreContextProps = {
 	removePlayer: (id: string) => void;
 	players: Player[];
 	setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
-	teams: Team[];
 	setGroupsQuantity: React.Dispatch<React.SetStateAction<number>>;
 	groupsQuantity: number;
-	setTeams: React.Dispatch<React.SetStateAction<Team[]>>;
 	clearAll: () => void;
 	setTeamsQuantity: React.Dispatch<React.SetStateAction<number>>;
 	teamsQuantity: number;
 	setVictoryPoints: React.Dispatch<React.SetStateAction<number>>;
 	victoryPoints: number;
-	initialData: any;
-	setInitialData: React.Dispatch<any>;
+	setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+	activeStep: number;
+	boardData: BoardData;
+	setBoardData: React.Dispatch<any>;
+	groups: Group[];
+	setGroups: React.Dispatch<React.SetStateAction<Group[]>>;
+	teams: Team[];
+	setTeams: React.Dispatch<React.SetStateAction<Team[]>>;
+	activeGroup: string;
+	setActiveGroup: React.Dispatch<React.SetStateAction<string>>;
 };
-
-console.log({ initialData });
 
 const StoreContext = createContext({} as StoreContextProps);
 
@@ -39,12 +71,22 @@ export const useStore = () => {
 };
 
 export const StoreProvider = ({ children }: StoreProps) => {
-	const [players, setPlayers] = useState<Player[]>([]);
-	const [teams, setTeams] = useState<Team[]>([]);
+	const [players, setPlayers] = useLocalStorage<Player[]>("players", []);
+	const [groups, setGroups] = useLocalStorage<Group[]>("groups", []);
+	const [teams, setTeams] = useLocalStorage<Team[]>("teams", []);
 	const [groupsQuantity, setGroupsQuantity] = useState<number>(0);
 	const [teamsQuantity, setTeamsQuantity] = useState<number>(0);
 	const [victoryPoints, setVictoryPoints] = useState<number>(3);
-	const [initialData, setInitialData] = useState<any>(undefined);
+	const [activeStep, setActiveStep] = useState(0);
+	const [activeGroup, setActiveGroup] = useState<string>("");
+	const [boardData, setBoardData] = useLocalStorage<BoardData>("board-data", {
+		players: {},
+		teamOrder: [],
+		teams: {},
+	});
+
+	console.log({ boardData });
+	console.log({ groups });
 
 	const getPlayersQuantity = () => players.length;
 
@@ -66,16 +108,22 @@ export const StoreProvider = ({ children }: StoreProps) => {
 				players,
 				setPlayers,
 				clearAll,
-				teams,
-				setTeams,
+				groups,
+				setGroups,
 				groupsQuantity,
 				setGroupsQuantity,
 				teamsQuantity,
 				setTeamsQuantity,
 				victoryPoints,
 				setVictoryPoints,
-				initialData,
-				setInitialData,
+				boardData,
+				setBoardData,
+				activeStep,
+				setActiveStep,
+				activeGroup,
+				setActiveGroup,
+				teams,
+				setTeams,
 			}}
 		>
 			{children}
