@@ -85,8 +85,8 @@ export const StoreProvider = ({ children }: StoreProps) => {
 		teams: {},
 	});
 
-	console.log({ boardData });
-	console.log({ groups });
+	// console.log({ boardData });
+	// console.log({ groups });
 
 	const getPlayersQuantity = () => players.length;
 
