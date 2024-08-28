@@ -53,34 +53,52 @@ const MatchCard = ({ match }: props) => {
 		}
 
 		if (isWinner) {
+			// sacamos de los lost el match id
 			newTeams[teamId].lost = newTeams[teamId].lost.filter(
 				(id) => id !== activeMatch?.id
 			);
-			newTeams[rivalId].lost = [
-				...newTeams[rivalId].lost,
-				activeMatch?.id || "",
-			];
 
+			// si no incluye el won, se lo agregamos
 			if (!newTeams[teamId].won.includes(activeMatch?.id!)) {
 				newTeams[teamId].won = [
 					...newTeams[teamId].won,
 					activeMatch?.id || "",
 				];
 			}
+
+			// agregamos el lost al rival
+			newTeams[rivalId].lost = [
+				...newTeams[rivalId].lost,
+				activeMatch?.id || "",
+			];
+
+			// le sacamos el won al rival
 			newTeams[rivalId].won = newTeams[rivalId].won.filter(
 				(id) => id !== activeMatch?.id
 			);
 		} else {
+			// le sacamos el won
 			newTeams[teamId].won = newTeams[teamId].won.filter(
 				(id) => id !== activeMatch?.id
 			);
 
+			// le agregamos el lost si no lo incluye
 			if (!newTeams[teamId].lost.includes(activeMatch?.id!)) {
 				newTeams[teamId].lost = [
 					...newTeams[teamId].lost,
 					activeMatch?.id || "",
 				];
 			}
+
+			// le agregamos el won al rival si no lo incluye
+			if (!newTeams[rivalId].won.includes(activeMatch?.id!)) {
+				newTeams[rivalId].won = [
+					...newTeams[rivalId].won,
+					activeMatch?.id || "",
+				];
+			}
+			// le sacmaos el lost al rival
+			newTeams[rivalId].lost.filter((id) => id !== activeMatch?.id);
 		}
 		newTeams[teamId].points = newTeams[teamId].won.length * victoryPoints;
 		newTeams[rivalId].points = newTeams[rivalId].won.length * victoryPoints;
