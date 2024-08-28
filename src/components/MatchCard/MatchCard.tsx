@@ -29,7 +29,9 @@ const MatchCard = ({ match }: props) => {
 		const rivalId: string =
 			activeMatch?.teamIds.filter((team) => team !== teamId)[0] || "";
 		const rivalRounds = activeMatch?.rounds[rivalId] || 0;
-		const isWinner = rounds >= 13 && rounds > rivalRounds;
+
+		const isWinner =
+			(rounds >= 13 || rivalRounds >= 13) && rounds > rivalRounds;
 		const newMatch = {
 			...activeMatch,
 			rounds: {
@@ -51,59 +53,7 @@ const MatchCard = ({ match }: props) => {
 				activeMatch?.id || "",
 			];
 		}
-
-		if (isWinner) {
-			// sacamos de los lost el match id
-			newTeams[teamId].lost = newTeams[teamId].lost.filter(
-				(id) => id !== activeMatch?.id
-			);
-
-			// si no incluye el won, se lo agregamos
-			if (!newTeams[teamId].won.includes(activeMatch?.id!)) {
-				newTeams[teamId].won = [
-					...newTeams[teamId].won,
-					activeMatch?.id || "",
-				];
-			}
-
-			// agregamos el lost al rival
-			newTeams[rivalId].lost = [
-				...newTeams[rivalId].lost,
-				activeMatch?.id || "",
-			];
-
-			// le sacamos el won al rival
-			newTeams[rivalId].won = newTeams[rivalId].won.filter(
-				(id) => id !== activeMatch?.id
-			);
-		} else {
-			// le sacamos el won
-			newTeams[teamId].won = newTeams[teamId].won.filter(
-				(id) => id !== activeMatch?.id
-			);
-
-			// le agregamos el lost si no lo incluye
-			if (!newTeams[teamId].lost.includes(activeMatch?.id!)) {
-				newTeams[teamId].lost = [
-					...newTeams[teamId].lost,
-					activeMatch?.id || "",
-				];
-			}
-
-			// le agregamos el won al rival si no lo incluye
-			if (!newTeams[rivalId].won.includes(activeMatch?.id!)) {
-				newTeams[rivalId].won = [
-					...newTeams[rivalId].won,
-					activeMatch?.id || "",
-				];
-			}
-			// le sacmaos el lost al rival
-			newTeams[rivalId].lost.filter((id) => id !== activeMatch?.id);
-		}
-		newTeams[teamId].points = newTeams[teamId].won.length * victoryPoints;
-		newTeams[rivalId].points = newTeams[rivalId].won.length * victoryPoints;
 		setGroups([...groupsCopy]);
-
 		setBoardData({ ...boardData, teams: newTeams });
 	};
 
@@ -129,86 +79,123 @@ const MatchCard = ({ match }: props) => {
 			newTeams[teamId].roundsDiff = count;
 		});
 
+		const activeMatch = activeGroup?.matches.find(
+			(match) => match.id === id
+		);
+		const rivalId: string =
+			activeMatch?.teamIds.filter((team) => team !== teamId)[0] || "";
+		const rivalRounds = activeMatch?.rounds[rivalId] || 0;
+		const isFinished = roundsA >= 13 || roundsB >= 13;
+		const isWinner =
+			isFinished &&
+			activeMatch?.rounds[teamId]! >= 13 &&
+			activeMatch?.rounds[teamId]! > rivalRounds;
+
+		console.log({ isFinished });
+		console.log({ isWinner });
+
+		if (isWinner) {
+			// sacamos de los lost el match id
+			newTeams[teamId].lost = newTeams[teamId].lost.filter(
+				(id) => id !== activeMatch?.id
+			);
+
+			// si no incluye el won, se lo agregamos
+			if (!newTeams[teamId].won.includes(activeMatch?.id!)) {
+				newTeams[teamId].won = [
+					...newTeams[teamId].won,
+					activeMatch?.id || "",
+				];
+			}
+
+			// agregamos el lost al rival
+			if (!newTeams[teamId].lost.includes(activeMatch?.id!)) {
+				newTeams[rivalId].lost = [
+					...newTeams[rivalId].lost,
+					activeMatch?.id || "",
+				];
+			}
+
+			// le sacamos el won al rival
+			newTeams[rivalId].won = newTeams[rivalId].won.filter(
+				(id) => id !== activeMatch?.id
+			);
+		} else if (isFinished && !isWinner) {
+			// le sacamos el won
+			newTeams[teamId].won = newTeams[teamId].won.filter(
+				(id) => id !== activeMatch?.id
+			);
+
+			// le agregamos el lost si no lo incluye
+			if (!newTeams[teamId].lost.includes(activeMatch?.id!)) {
+				console.log("pushing lost");
+				newTeams[teamId].lost = [
+					...newTeams[teamId].lost,
+					activeMatch?.id || "",
+				];
+			}
+
+			// le agregamos el won al rival si no lo incluye
+			if (!newTeams[rivalId].won.includes(activeMatch?.id!)) {
+				newTeams[rivalId].won = [
+					...newTeams[rivalId].won,
+					activeMatch?.id || "",
+				];
+			}
+			// le sacmaos el lost al rival
+			newTeams[rivalId].lost.filter((id) => id !== activeMatch?.id);
+		}
+		newTeams[teamId].points = newTeams[teamId].won.length * victoryPoints;
+		newTeams[rivalId].points = newTeams[rivalId].won.length * victoryPoints;
+
 		setBoardData({ ...boardData, teams: newTeams });
 	};
-	// const handleRoundsUpdate = (teamId: string) => {
-	// 	const groupIdx = groups.find((group) =>
-	// 		group.members.includes(teamId)
-	// 	)?.id;
-	// 	const activeGroup = groups.find((group) => group.id === groupIdx);
-	// 	const newTeams = { ...boardData.teams };
-
-	// 	let teamCount: number = 0;
-	// 	let rivalCount: number = 0;
-
-	// 	activeGroup?.matches
-	// 		.filter((match) => match.teamIds.includes(teamId))
-	// 		.forEach((match) => {
-	// 			teamCount += match.rounds[teamId];
-	// 			teamCount -=
-	// 				match.rounds[
-	// 					match.teamIds.filter((id) => id !== teamId)[0]
-	// 				];
-	// 		});
-	// 	newTeams[teamId].roundsDiff = teamCount;
-
-	// 	const rivalId: string = teamIds.filter((id) => id === teamId)[0];
-
-	// 	activeGroup?.matches
-	// 		.filter((match) => match.teamIds.includes(rivalId))
-	// 		.forEach((match) => {
-	// 			rivalCount -= match.rounds[teamId];
-	// 			rivalCount +=
-	// 				match.rounds[
-	// 					match.teamIds.filter((id) => id !== teamId)[0]
-	// 				];
-	// 		});
-	// 	newTeams[rivalId].roundsDiff = rivalCount;
-
-	// 	console.log({ teamCount });
-	// 	console.log({rivalCount})
-	// 	setBoardData({ ...boardData, teams: newTeams });
-	// };
 
 	return (
 		<div className="min-w-[500px] max-w-[500px] inline-flex items-center justify-between p-4 bg-white border border-cyan-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-			<div className="inline-flex items-center justify-start">
-				<input
-					className="w-[40px] min-h-[40px] p-0 m-0 mb-0 text-center border border-cyan-400 rounded-lg mr-4"
-					style={{ margin: "0px", marginRight: "8px" }}
-					onChange={(e) =>
-						handleRoundsChange(
-							teamIds[0],
-							Number(e.currentTarget.value)
-						)
-					}
-					onBlur={() => handleRoundsUpdate(teamIds[0])}
-					value={roundsA}
-					type="number"
-				/>{" "}
-				<h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
-					{teams[teamIds[0]].tag}{" "}
-				</h5>
+			<div className="flex flex-col items-center">
+				<div className="inline-flex items-center justify-start">
+					<input
+						className="w-[40px] min-h-[40px] p-0 m-0 mb-0 text-center border border-cyan-400 rounded-lg mr-4"
+						style={{ margin: "0px", marginRight: "8px" }}
+						onChange={(e) =>
+							handleRoundsChange(
+								teamIds[0],
+								Number(e.currentTarget.value)
+							)
+						}
+						onBlur={() => handleRoundsUpdate(teamIds[0])}
+						value={roundsA}
+						type="number"
+					/>{" "}
+					<h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+						{teams[teamIds[0]].tag}{" "}
+					</h5>
+				</div>
+				<span>{`(${roundsA - roundsB})`}</span>
 			</div>
 
 			<span className="text-xl font-bold text-cyan-400"> VS </span>
-			<div className="inline-flex items-center justify-start">
-				<h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
-					{teams[teamIds[1]].tag}{" "}
-				</h5>
-				<input
-					className="w-[40px] min-h-[40px] p-0 m-0 mb-0 text-center border border-cyan-400 rounded-lg  ml-4"
-					style={{ margin: "0px", marginLeft: "8px" }}
-					onChange={(e) =>
-						handleRoundsChange(
-							teamIds[1],
-							Number(e.currentTarget.value)
-						)
-					}
-					onBlur={() => handleRoundsUpdate(teamIds[1])}
-					value={roundsB}
-					type="number"
-				/>
+			<div className="flex flex-col items-center">
+				<div className="inline-flex items-center justify-start">
+					<h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+						{teams[teamIds[1]].tag}{" "}
+					</h5>
+					<input
+						className="w-[40px] min-h-[40px] p-0 m-0 mb-0 text-center border border-cyan-400 rounded-lg  ml-4"
+						style={{ margin: "0px", marginLeft: "8px" }}
+						onChange={(e) =>
+							handleRoundsChange(
+								teamIds[1],
+								Number(e.currentTarget.value)
+							)
+						}
+						onBlur={() => handleRoundsUpdate(teamIds[1])}
+						value={roundsB}
+						type="number"
+					/>
+				</div>
+				<span>{`(${roundsB - roundsA})`}</span>
 			</div>
 		</div>
 	);
