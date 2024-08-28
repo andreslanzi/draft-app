@@ -74,8 +74,8 @@ export const StoreProvider = ({ children }: StoreProps) => {
 	const [players, setPlayers] = useLocalStorage<Player[]>("players", []);
 	const [groups, setGroups] = useLocalStorage<Group[]>("groups", []);
 	const [teams, setTeams] = useLocalStorage<Team[]>("teams", []);
-	const [groupsQuantity, setGroupsQuantity] = useState<number>(0);
-	const [teamsQuantity, setTeamsQuantity] = useState<number>(0);
+	const [groupsQuantity, setGroupsQuantity] = useState<number>(3);
+	const [teamsQuantity, setTeamsQuantity] = useState<number>(4);
 	const [victoryPoints, setVictoryPoints] = useState<number>(3);
 	const [activeStep, setActiveStep] = useState(0);
 	const [activeGroup, setActiveGroup] = useState<string>("");
