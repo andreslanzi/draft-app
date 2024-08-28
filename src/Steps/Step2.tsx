@@ -29,8 +29,6 @@ const Step2 = () => {
 		groupsQuantity,
 		teamsQuantity,
 		setGroups,
-		groups,
-		activeGroup,
 		setActiveGroup,
 		players,
 	} = useStore();

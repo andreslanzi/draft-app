@@ -5,7 +5,7 @@ import { Droppable } from "react-beautiful-dnd";
 const Container = styled.div<{ isNoTeamCol: any }>`
 	margin: 8px;
 	border: 1px solid lightgrey;
-	border-radius: 2px;
+	border-radius: 25px;
 	width: ${(props) => (props.isNoTeamCol ? "100%" : "220px")};
 	display: flex;
 	flex-direction: column;

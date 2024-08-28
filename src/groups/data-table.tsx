@@ -3,8 +3,6 @@ import {
 	flexRender,
 	getCoreRowModel,
 	getSortedRowModel,
-	Row,
-	SortingFn,
 	SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
@@ -44,7 +42,7 @@ export function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div className="rounded-md border">
+		<div>
 			<Table>
 				<TableHeader className="bg-[#EBF4F6]">
 					{table.getHeaderGroups().map((headerGroup) => (
