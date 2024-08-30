@@ -84,6 +84,13 @@ const Step1 = () => {
 		<div className="flex flex-col">
 			<div className="inline-flex w-full justify-around">
 				<div className="flex flex-col w-[20%] items-center">
+					<div className="items-center inline-flex justify-start w-full mb-4">
+						<h4 className="font-bold text-center text-green-700">
+							Importar Players
+						</h4>
+						<CsvFileInput onFileLoad={handleFileLoad} />
+					</div>
+
 					<h2 className="font-bold text-center text-[#EBF4F6]">
 						Agregar Capitán
 					</h2>
@@ -217,7 +224,7 @@ const Step1 = () => {
 				</div>
 
 				<div className="flex flex-col w-[60%] flex-wrap max-h-[60%]">
-					<div className="inline-flex items-center mb-5">
+					<div className="inline-flex items-center mb-5 max-h-[32px]">
 						<h2 className="font-bold text-center mr-2 text-[#EBF4F6]">
 							Jugadores({players.length})
 						</h2>
@@ -228,8 +235,6 @@ const Step1 = () => {
 						>
 							Borrar Todos
 						</button>
-
-						<CsvFileInput onFileLoad={handleFileLoad} />
 					</div>
 
 					<div className="inline-flex flex-wrap">
