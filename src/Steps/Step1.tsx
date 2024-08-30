@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useStore } from "../store/store";
+import { useEffect, useState } from "react";
+import { Player, useStore } from "../store/store";
 import PlayerCard from "../components/PlayerCard";
+import CsvFileInput from "../components/CsvFileInput";
 
 const Step1 = () => {
 	const [captainText, setCaptainText] = useState<string>("");
@@ -58,6 +59,26 @@ const Step1 = () => {
 			teamOrder,
 		});
 	};
+
+	const [data, setData] = useState<Player[]>([]);
+	const handleFileLoad = (csvData: any) => {
+		setData(csvData);
+	};
+
+	useEffect(() => {
+		if (data.length > 0) {
+			const newPool = data.map((player, idx) => {
+				return {
+					nick: player.nick,
+					id: `player-${idx + 1}`,
+
+					isCaptain: player.isCaptain,
+				};
+			});
+			setPlayers(newPool);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
 
 	return (
 		<div className="flex flex-col">
@@ -207,6 +228,8 @@ const Step1 = () => {
 						>
 							Borrar Todos
 						</button>
+
+						<CsvFileInput onFileLoad={handleFileLoad} />
 					</div>
 
 					<div className="inline-flex flex-wrap">

@@ -91,9 +91,6 @@ const MatchCard = ({ match }: props) => {
 			activeMatch?.rounds[teamId]! >= 13 &&
 			activeMatch?.rounds[teamId]! > rivalRounds;
 
-		console.log({ isFinished });
-		console.log({ isWinner });
-
 		if (isWinner) {
 			// sacamos de los lost el match id
 			newTeams[teamId].lost = newTeams[teamId].lost.filter(
@@ -128,7 +125,6 @@ const MatchCard = ({ match }: props) => {
 
 			// le agregamos el lost si no lo incluye
 			if (!newTeams[teamId].lost.includes(activeMatch?.id!)) {
-				console.log("pushing lost");
 				newTeams[teamId].lost = [
 					...newTeams[teamId].lost,
 					activeMatch?.id || "",
