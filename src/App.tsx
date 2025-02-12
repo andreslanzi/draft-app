@@ -9,22 +9,13 @@ function App() {
 	const { activeStep } = useStore();
 	return (
 		<div className="h-screen w-screen p-10 bg-[#071952]">
-			<div className="flex w-full flex-col justify-center items-center">
+			{/* <div className="flex w-full flex-col justify-center items-center">
 				<img
-					src="https://i.imgur.com/gy6HjbO.png"
-					alt="logo"
-					className="max-h-[120px] mb-10"
-				/>
-				<h1 className="text-white mb-10">
-					En memoria de Federico{" "}
-					<span className="text-green-500">"Next"</span> Rodriguez
-				</h1>
-				{/* <img
 					src="https://imgur.com/a/WIIaaIC"
 					alt="logo"
 					className="max-h-[120px] mb-10"
-				/> */}
-			</div>
+				/>
+			</div> */}
 			{activeStep === 0 && <Step1 />}
 			{activeStep === 1 && <Step2 />}
 			{activeStep === 2 && <Step3 />}
