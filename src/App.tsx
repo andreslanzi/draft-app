@@ -11,10 +11,19 @@ function App() {
 		<div className="h-screen w-screen p-10 bg-[#071952]">
 			<div className="flex w-full flex-col justify-center items-center">
 				<img
-					src="https://pbs.twimg.com/media/GNyv55eW4AE2Qnn?format=png&name=4096x4096"
+					src="https://i.imgur.com/gy6HjbO.png"
 					alt="logo"
 					className="max-h-[120px] mb-10"
 				/>
+				<h1 className="text-white mb-10">
+					En memoria de Federico{" "}
+					<span className="text-green-500">"Next"</span> Rodriguez
+				</h1>
+				{/* <img
+					src="https://imgur.com/a/WIIaaIC"
+					alt="logo"
+					className="max-h-[120px] mb-10"
+				/> */}
 			</div>
 			{activeStep === 0 && <Step1 />}
 			{activeStep === 1 && <Step2 />}
