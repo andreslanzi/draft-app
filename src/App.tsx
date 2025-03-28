@@ -4,18 +4,26 @@ import Step3 from "./Steps/Step3";
 import "@atlaskit/css-reset";
 import { useStore } from "./store/store";
 import "./App.css";
+import AutoplayCarousel from "./components/AutoplayCarousel";
 
 function App() {
 	const { activeStep } = useStore();
 	return (
-		<div className="h-screen w-screen p-10 bg-[#071952]">
-			{/* <div className="flex w-full flex-col justify-center items-center">
+		<div className="h-screen w-screen p-10 App">
+			<div className="flex w-full justify-center m-auto items-center">
 				<img
-					src="https://imgur.com/a/WIIaaIC"
+					src="https://i.imgur.com/erZtXAL.png"
 					alt="logo"
-					className="max-h-[120px] mb-10"
+					style={{ maxHeight: "100px" }}
 				/>
-			</div> */}
+				<h2 className="logoText">MOMBOCHOS CREW</h2>
+				<img
+					src="https://i.imgur.com/erZtXAL.png"
+					alt="logo"
+					style={{ maxHeight: "100px" }}
+				/>
+			</div>
+			<AutoplayCarousel />
 			{activeStep === 0 && <Step1 />}
 			{activeStep === 1 && <Step2 />}
 			{activeStep === 2 && <Step3 />}

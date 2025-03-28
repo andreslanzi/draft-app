@@ -1,10 +1,64 @@
 .App {
 	text-align: center;
 	color: #ebf4f6;
-	background-color: #071952;
+	background-color: #0a7c26;
+}
+
+.logoText {
+	font-family: "Michroma", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 24px;
 }
 
 .App-logo {
 	height: 40vmin;
 	pointer-events: none;
+}
+.carousel-container {
+	overflow: hidden;
+	position: relative;
+	height: 200px;
+	width: 100%;
+}
+
+.carousel-card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 140px;
+	height: 100px;
+	&:hover {
+		transform: scale(1.2);
+	}
+	border-radius: 20%;
+	background: rgb(41, 40, 40);
+}
+
+.carousel-card > img {
+	height: 80%;
+	width: 80%;
+	border-radius: 10%;
+}
+
+.carousel-track {
+	display: flex;
+	position: absolute;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	gap: 16px;
+	width: 1000%;
+	height: 100%;
+	animation: slide 70s linear infinite;
+}
+
+@keyframes slide {
+	0% {
+		left: 0;
+	}
+	100% {
+		left: -1000%;
+	}
 }

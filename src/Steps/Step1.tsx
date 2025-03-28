@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Player, useStore } from "../store/store";
 import PlayerCard from "../components/PlayerCard";
-import CsvFileInput from "../components/CsvFileInput";
 
 const Step1 = () => {
 	const [captainText, setCaptainText] = useState<string>("");
@@ -84,12 +83,12 @@ const Step1 = () => {
 		<div className="flex flex-col">
 			<div className="inline-flex w-full justify-around">
 				<div className="flex flex-col w-[20%] items-center">
-					<div className="items-center inline-flex justify-start w-full mb-4">
+					{/* <div className="items-center inline-flex justify-start w-full mb-4">
 						<h4 className="font-bold text-center text-green-700">
 							Importar Players
 						</h4>
 						<CsvFileInput onFileLoad={handleFileLoad} />
-					</div>
+					</div> */}
 
 					<h2 className="font-bold text-center text-[#EBF4F6]">
 						Agregar Capitán
@@ -251,7 +250,7 @@ const Step1 = () => {
 			</div>
 			<div className="inline-flex justify-center items-center w-full my-10">
 				<button
-					className="w-[300px] h-10  select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none  "
+					className="w-[300px] h-10  select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg bg-[#883062] hover:bg-cyan-600 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none  "
 					type="button"
 					onClick={async () => {
 						createTeams();

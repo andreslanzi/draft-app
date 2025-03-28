@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+
+/* slick-carousel CSS */
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 
 @layer base {
 	input[type="number"]::-webkit-inner-spin-button,
@@ -14,7 +19,7 @@ body,
 html {
 	width: 100%;
 	margin: 0;
-	background-color: #071952;
+	background-color: #0a7c26;
 
 	color: #fff;
 }

@@ -14,7 +14,7 @@ const PlayerCard = ({ player, canDelete }: props) => {
 			 text-xs py-2 px-4 m-1 rounded-lg  text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
 			type="button"
 			style={{
-				backgroundColor: player.isCaptain ? "#088395" : "black",
+				backgroundColor: player.isCaptain ? "#883062" : "black",
 			}}
 		>
 			{player.nick}
