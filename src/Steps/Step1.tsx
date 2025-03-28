@@ -59,25 +59,25 @@ const Step1 = () => {
 		});
 	};
 
-	const [data, setData] = useState<Player[]>([]);
-	const handleFileLoad = (csvData: any) => {
-		setData(csvData);
-	};
+	// const [data, setData] = useState<Player[]>([]);
+	// const handleFileLoad = (csvData: any) => {
+	// 	setData(csvData);
+	// };
 
-	useEffect(() => {
-		if (data.length > 0) {
-			const newPool = data.map((player, idx) => {
-				return {
-					nick: player.nick,
-					id: `player-${idx + 1}`,
+	// useEffect(() => {
+	// 	if (data.length > 0) {
+	// 		const newPool = data.map((player, idx) => {
+	// 			return {
+	// 				nick: player.nick,
+	// 				id: `player-${idx + 1}`,
 
-					isCaptain: player.isCaptain,
-				};
-			});
-			setPlayers(newPool);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data]);
+	// 				isCaptain: player.isCaptain,
+	// 			};
+	// 		});
+	// 		setPlayers(newPool);
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [data]);
 
 	return (
 		<div className="flex flex-col">
