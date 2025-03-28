@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Player, useStore } from "../store/store";
+import { useState } from "react";
+import { useStore } from "../store/store";
 import PlayerCard from "../components/PlayerCard";
 
 const Step1 = () => {
